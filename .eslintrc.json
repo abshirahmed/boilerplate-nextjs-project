@@ -1,19 +1,39 @@
 {
   "root": true,
+  "env": {
+    "jest/globals": true
+  },
   "parser": "@typescript-eslint/parser",
-  "extends": ["plugin:@typescript-eslint/recommended", "next/core-web-vitals", "prettier"],
-  "plugins": ["@typescript-eslint", "eslint-plugin-prettier", "jest", "testing-library"],
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "eslint:recommended",
+    "next/core-web-vitals",
+    "plugin:jest/recommended",
+    "plugin:storybook/recommended",
+    "plugin:prettier/recommended"
+  ],
   "overrides": [
     // Only uses Testing Library lint rules in test files
     {
-      "files": ["**/__tests__/**/*.[jt]s?(x)", "**/?(*.)+(spec|test).[jt]s?(x)"],
-      "extends": ["plugin:testing-library/react"]
+      "files": [
+        "**/__tests__/**/*.[jt]s?(x)",
+        "**/?(*.)+(spec|test).[jt]s?(x)"
+      ],
+      "extends": [
+        "plugin:testing-library/react"
+      ]
+    },
+    {
+      // or whatever matches stories specified in .storybook/main.js
+      "files": [
+        "*.stories.@(ts|tsx|js|jsx|mjs|cjs)"
+      ],
+      "rules": {
+        // example of overriding a rule
+        "storybook/hierarchy-separator": "error",
+        // example of disabling a rule
+        "storybook/default-exports": "off"
+      }
     }
-  ],
-  "rules": {
-    "prettier/prettier": "warn"
-  },
-  "env": {
-    "jest/globals": true
-  }
+  ]
 }
